@@ -17,6 +17,7 @@ type UserContextType = {
   user: User | null;
   login: (token: string) => void;
   logout: () => void;
+  isInitialized: boolean;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -24,36 +25,35 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const [isInitialized, setIsInitialized] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     if (token) {
       try {
         const decoded = jwtDecode(token) as any;
-
         if (decoded.exp * 1000 < Date.now()) {
-          console.warn('Token expired');
           localStorage.removeItem('token');
           setUser(null);
-          return;
+        } else {
+          setUser({
+            id: decoded.sub,
+            uuid: decoded.uuid,
+            email: decoded.email,
+            username: decoded.username,
+            full_name: decoded.full_name,
+            role: decoded.role,
+            is_verified: decoded.is_verified,
+          });
         }
-
-        setUser({
-          id: decoded.sub,
-          uuid: decoded.uuid,
-          email: decoded.email,
-          username: decoded.username,
-          full_name: decoded.full_name,
-          role: decoded.role,
-          is_verified: decoded.is_verified,
-        });
-      } catch (err) {
-        console.error('Invalid token:', err);
+      } catch {
         localStorage.removeItem('token');
         setUser(null);
       }
     }
+    setIsInitialized(true); // penting
   }, []);
+
 
   const login = (token: string) => {
     localStorage.setItem('token', token);
@@ -81,7 +81,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, isInitialized }}>
       {children}
     </UserContext.Provider>
   );

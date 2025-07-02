@@ -3,7 +3,7 @@
 
 import { useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useUser } from '@/app/context/UserContext';
+import { useUser } from '@/context/UserContext';
 
 export default function LoginSuccess() {
   const params = useSearchParams();

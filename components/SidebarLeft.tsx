@@ -1,6 +1,5 @@
 'use client';
 
-import { useUser } from "@/app/context/UserContext";
 import Link from "next/link";
 import {
   Home,
@@ -14,10 +13,11 @@ import {
   LogOut,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 export default function SidebarLeft() {
-  const { user, logout } = useUser();
   const [hasToken, setHasToken] = useState(false);
+  const { user, logout, isInitialized } = useUser();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -25,6 +25,9 @@ export default function SidebarLeft() {
       setHasToken(!!token);
     }
   }, []);
+
+  // 🔐 Aman: Hooks di atas sudah dipanggil sebelum ini
+  if (!isInitialized) return null;
 
   const menuItems = [
     { href: "/feed", label: "Feed", icon: Home },
@@ -34,10 +37,10 @@ export default function SidebarLeft() {
     { href: "/notifications", label: "Notifications", icon: Bell },
   ];
 
-  const userItems = [
+  const getUserItems = user ? [
     { href: "/create-post", label: "Create Post", icon: PlusSquare },
-    { href: `/profile/${user?.username || "me"}`, label: "Profile", icon: User },
-  ];
+    { href: `/profile/${user.username}`, label: "Profile", icon: User },
+  ] : [];
 
   return (
     <aside className="fixed left-0 top-0 w-72 h-screen overflow-y-auto border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 hidden md:block z-20">
@@ -57,7 +60,7 @@ export default function SidebarLeft() {
 
         {hasToken && user ? (
           <>
-            {userItems.map(({ href, label, icon: Icon }) => (
+            {getUserItems.map(({ href, label, icon: Icon }) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -89,7 +92,6 @@ export default function SidebarLeft() {
             </Link>
           </li>
         )}
-
       </ul>
     </aside>
   );

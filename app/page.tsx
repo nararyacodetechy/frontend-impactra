@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "./context/UserContext";
+import { useUser } from "@/context/UserContext";
 
 export default function HomePage() {
   const { user } = useUser();

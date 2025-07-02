@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/app/context/UserContext";
+import { useUser } from "@/context/UserContext";
 import { loginUser, registerUser } from "@/lib/authServices";
 import GoogleLoginButton from "./GoogleLoginButton";
 
