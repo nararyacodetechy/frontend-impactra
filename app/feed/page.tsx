@@ -1,22 +1,53 @@
 'use client';
 
-import PostCard from "@/components/PostCard";
-import { dummyPosts } from "@/lib/dummyPosts";
+import { useEffect, useRef, useState } from 'react';
+import PostCard from '@/components/PostCard';
+import { fetchAllPosts, Post } from '@/lib/postService';
 
 export default function FeedPage() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('Semua');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const load = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Unauthorized');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const data = await fetchAllPosts(token);
+        setPosts(data);
+        setFilteredPosts(data); // default to all
+      } catch (err: any) {
+        console.error(err);
+        setError(err.message || 'Failed to load posts');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+  }, []);
+
   return (
     <>
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0 z-10 border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md px-4 lg:px-8 py-6">
-        <div className="max-w-2xl mx-auto">
-          
-        </div>
-      </div>
-
-      {/* Main Content with padding top */}
-      <div className="flex justify-center pt-12">
+      {/* Main Content */}
+      <div className="flex justify-center">
         <div className="w-full">
-          {dummyPosts.map((post) => (
+          {loading && <p className="text-center">Loading...</p>}
+          {error && <p className="text-center text-red-500">{error}</p>}
+
+          {filteredPosts.length === 0 && !loading && (
+            <p className="text-center text-gray-500">No posts found.</p>
+          )}
+
+          {filteredPosts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
