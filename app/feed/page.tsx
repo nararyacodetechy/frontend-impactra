@@ -13,15 +13,8 @@ export default function FeedPage() {
 
   useEffect(() => {
     const load = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('Unauthorized');
-        setLoading(false);
-        return;
-      }
-
       try {
-        const data = await fetchAllPosts(token);
+        const data = await fetchAllPosts();
         setPosts(data);
         setFilteredPosts(data); // default to all
       } catch (err: any) {

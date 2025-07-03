@@ -9,11 +9,7 @@ export default function PostList() {
 
   useEffect(() => {
     const loadPosts = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-
-      const data = await fetchAllPosts(token);
-      console.log("data post list:", data)
+      const data = await fetchAllPosts();
       setPosts(data);
     };
 

@@ -22,15 +22,11 @@ export type CommentPayload = {
   content: string;
 };
 
-export async function fetchAllPosts(token: string): Promise<Post[]> {
-    const url = `${API_BASE_URL}/posts`;
-    console.log("Fetching posts from:", url); // Tambahkan log
-    const res = await axios.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return res.data;
-  }
-  
+export async function fetchAllPosts(): Promise<Post[]> {
+  const url = `${API_BASE_URL}/posts`;
+  const res = await axios.get(url);
+  return res.data;
+}
 
 export async function createPost(
   content: string,
@@ -65,3 +61,20 @@ export async function unsupportPost(postId: number, token: string) {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
+
+// export async function fetchMyPosts(token: string, username?: string): Promise<Post[]> {
+//   const res = await fetch(`${API_BASE_URL}/posts/me`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   console.log("response fetchAllPostsByUser:",res)
+
+//   if (!res.ok) {
+//     throw new Error('Failed to fetch posts');
+//   }
+
+//   return res.json();
+// }
+

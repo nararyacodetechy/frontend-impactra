@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Post } from '@/lib/postService';
+import Link from 'next/link';
 
 type Props = {
   post: Post;
@@ -21,8 +22,6 @@ type Props = {
 export default function PostCard({ post }: Props) {
   const [liked, setLiked] = useState(false);
   const [imgError, setImgError] = useState(false);
-
-  console.log({post})
 
   const supportCount = post.supports.length;
   const commentCount = post.comments.length;
@@ -36,14 +35,13 @@ export default function PostCard({ post }: Props) {
     <div className="border w-full border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden bg-white dark:bg-gray-900">
       {/* Header */}
       <div className="px-4 py-3 flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-        <div className="flex items-center gap-3">
+        <Link href={`/profile/${post.author.username}`} className="flex items-center gap-3 hover:underline">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-300 dark:bg-gray-700">
-            {post.author?.avatar_url ? (
-              <Image
+            {!imgError && post.author?.avatar_url ? (
+              <img
                 src={post.author.avatar_url}
-                alt={post.author.username}
-                width={36}
-                height={36}
+                onError={() => setImgError(true)}
+                alt={post.author?.username}
                 className="object-cover w-full h-full"
               />
             ) : (
@@ -58,7 +56,7 @@ export default function PostCard({ post }: Props) {
               {post.author.username} · {formatDistanceToNow(new Date(post.created_at))} ago
             </p>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* Image */}
