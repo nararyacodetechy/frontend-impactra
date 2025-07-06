@@ -1,6 +1,6 @@
 import SidebarLeft from "@/components/SidebarLeft";
 import SidebarRight from "@/components/SidebarRight";
-import Header from "@/components/Header";
+import HeaderCategory from "@/components/HeaderCategory";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +12,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <div className="md:pl-72 lg:pr-72">
         {/* Header fixed */}
         <div className="fixed top-0 left-0 right-0 z-50 md:pl-72 lg:pr-72">
-          <Header />
+          <HeaderCategory />
         </div>
 
         {/* Main content, padding-top to avoid being under header */}

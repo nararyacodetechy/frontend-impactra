@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { fetchPrivateProfile, Profile } from '@/lib/profileService';
-import PostCard from '@/components/PostCard';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function MyProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -56,7 +57,7 @@ export default function MyProfilePage() {
         />
         <div className="w-full">
           <h2 className="text-2xl font-bold">{profile.full_name}</h2>
-          <p className="text-gray-500 text-sm">@{profile.username}</p>
+          <p className="text-gray-500 text-sm">{profile.username}</p>
           <p className="text-sm text-blue-600 font-medium capitalize">{profile.role}</p>
           <p className="text-gray-700 dark:text-gray-300 mt-2">{profile.bio || 'Bio belum ditambahkan.'}</p>
           <p className="text-gray-500 text-sm mt-1">📧 {profile.email}</p>
@@ -89,11 +90,15 @@ export default function MyProfilePage() {
             {profile.posts.map((post) => (
               <div key={post.id} className="relative aspect-square overflow-hidden rounded-lg">
                 {post.image_url ? (
-                  <img
-                    src={post.image_url}
-                    alt="Post"
-                    className="w-full h-full object-cover"
-                  />
+                  <Link href={`/post/${post.uuid}`} className="relative block w-full h-80 bg-gray-200 dark:bg-gray-800">
+                    <Image
+                      src={post.image_url}
+                      alt="Post"
+                      className="object-cover"
+                      fill
+                      onError={() => setImgError(true)}
+                    />
+                  </Link>                
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-500 text-sm">
                     Tanpa Gambar

@@ -4,6 +4,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export type Post = {
     id: number;
+    uuid: string;
     content: string;
     image_url: string | null;
     created_at: string;
@@ -22,12 +23,6 @@ export type CommentPayload = {
   content: string;
 };
 
-export async function fetchAllPosts(): Promise<Post[]> {
-  const url = `${API_BASE_URL}/posts`;
-  const res = await axios.get(url);
-  return res.data;
-}
-
 export async function createPost(
   content: string,
   image_url: string | null,
@@ -38,6 +33,17 @@ export async function createPost(
     { content, image_url },
     { headers: { Authorization: `Bearer ${token}` } }
   );
+}
+
+export async function fetchAllPosts(): Promise<Post[]> {
+  const url = `${API_BASE_URL}/posts`;
+  const res = await axios.get(url);
+  return res.data;
+}
+
+export async function fetchPostByUUID(uuid: string) {
+  const res = await axios.get(`${API_BASE_URL}/posts/uuid/${uuid}`);
+  return res.data;
 }
 
 export async function commentOnPost(postId: number, payload: CommentPayload, token: string) {
@@ -61,20 +67,3 @@ export async function unsupportPost(postId: number, token: string) {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
-
-// export async function fetchMyPosts(token: string, username?: string): Promise<Post[]> {
-//   const res = await fetch(`${API_BASE_URL}/posts/me`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   console.log("response fetchAllPostsByUser:",res)
-
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch posts');
-//   }
-
-//   return res.json();
-// }
-

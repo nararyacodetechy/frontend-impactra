@@ -81,7 +81,7 @@ export default function CreatePostForm({ redirectTo }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white dark:bg-gray-900 rounded-xl shadow-md p-4 mb-6 border border-gray-200 dark:border-gray-700"
+      className="bg-white dark:bg-gray-900 shadow-md p-4 mb-6 border border-gray-200 dark:border-gray-700"
     >
       <div className="mb-3">
         <textarea

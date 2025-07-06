@@ -33,4 +33,28 @@ export async function fetchPrivateProfile() {
     return result.data
 }
 
+// lib/profileService.ts
+
+export async function updatePrivateProfile(data: Partial<Profile>) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`${API_BASE_URL}/profile/private/me`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Gagal update profil');
+  }
+
+  const result = await res.json();
+  return result.data;
+}
+
+
   

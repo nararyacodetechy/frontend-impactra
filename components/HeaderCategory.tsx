@@ -16,7 +16,7 @@ const categories = [
   'Keamanan',
 ];
 
-export default function Header() {
+export default function HeaderCategory() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {

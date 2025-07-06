@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchPublicProfile, Profile } from '@/lib/profileService';
-import PostCard from '@/components/PostCard';
+import Link from 'next/link';
 
 export default function PublicProfilePage() {
   const { username } = useParams();
@@ -75,23 +75,28 @@ export default function PublicProfilePage() {
         ) : (
           <div className="grid grid-cols-3 gap-4">
             {profile.posts.map((post) => (
-              <div key={post.id} className="relative aspect-square overflow-hidden rounded-lg">
+              <Link
+                key={post.id}
+                href={`/post/${post.uuid}`}
+                className="relative aspect-square overflow-hidden rounded-lg group"
+              >
                 {post.image_url ? (
                   <img
                     src={post.image_url}
                     alt="Post"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-500 text-sm">
                     Tanpa Gambar
                   </div>
                 )}
-              </div>
+              </Link>
             ))}
           </div>
         )}
       </div>
+
 
     </div>
   );

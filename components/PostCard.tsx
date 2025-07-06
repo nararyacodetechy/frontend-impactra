@@ -26,6 +26,7 @@ export default function PostCard({ post }: Props) {
   const supportCount = post.supports.length;
   const commentCount = post.comments.length;
 
+  console.log("post",post)
   const handleSupport = () => {
     setLiked(!liked);
     // TODO: panggil supportPost / unsupportPost di sini
@@ -61,22 +62,22 @@ export default function PostCard({ post }: Props) {
 
       {/* Image */}
       {post.image_url && !imgError ? (
-        <div className="relative w-full h-80 bg-gray-200 dark:bg-gray-800">
+        <Link href={`/post/${post.uuid}`} className="relative block w-full h-80 bg-gray-200 dark:bg-gray-800">
           <Image
             src={post.image_url}
             alt="Post"
-            fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            fill
             onError={() => setImgError(true)}
           />
-        </div>
+        </Link>
       ) : post.image_url && imgError ? (
         <div className="flex flex-col items-center justify-center w-full h-80 bg-gray-100 dark:bg-gray-800 text-gray-500">
           <ImageOff className="w-10 h-10 mb-2" />
           <p className="text-sm">Image not available</p>
         </div>
       ) : null}
+
 
       {/* Caption / Content */}
       <div className="p-4">
