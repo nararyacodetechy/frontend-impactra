@@ -79,7 +79,7 @@ export default function AuthForm({ type }: AuthFormProps) {
             required
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="w-full p-2 border rounded bg-white dark:bg-gray-800"
+            className="w-full p-2 border rounded bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
           />
         )}
 
@@ -89,7 +89,7 @@ export default function AuthForm({ type }: AuthFormProps) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded bg-white dark:bg-gray-800"
+          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800"
         />
 
         <input
@@ -98,7 +98,7 @@ export default function AuthForm({ type }: AuthFormProps) {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded bg-white dark:bg-gray-800"
+          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800"
         />
 
         <button

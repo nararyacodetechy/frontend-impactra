@@ -14,7 +14,6 @@ export default function PostDetailHeader() {
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
-      <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Kembali</h1>
     </div>
   );
 }

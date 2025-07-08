@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostCard from '@/components/PostCard';
 import { fetchAllPosts, Post } from '@/lib/postService';
+import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
 
 export default function FeedPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -30,10 +31,12 @@ export default function FeedPage() {
 
   return (
     <>
+      {/* Overlay Loading */}
+      <OverlayLoadingModal show={loading} />
+
       {/* Main Content */}
       <div className="flex justify-center">
         <div className="w-full">
-          {loading && <p className="text-center">Loading...</p>}
           {error && <p className="text-center text-red-500">{error}</p>}
 
           {filteredPosts.length === 0 && !loading && (

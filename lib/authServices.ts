@@ -72,3 +72,17 @@ export async function setPassword(data: {
   if (!res.ok) throw new Error(result.message || "Gagal mengatur password");
   return result;
 }
+
+// api/auth.ts
+export async function getLoginSessions(token: string) {
+  const res = await fetch(`${API_BASE_URL}/auth/sessions`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const result = await res.json();
+  if (!res.ok) throw new Error(result.message || 'Gagal mengambil sesi login');
+  return result.data;
+}
+

@@ -10,14 +10,14 @@ import {
   PlusSquare,
   User,
   LogIn,
-  LogOut,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
+import LogoutButton from "@/components/LogoutButton"; 
 
 export default function SidebarLeft() {
   const [hasToken, setHasToken] = useState(false);
-  const { user, logout, isInitialized } = useUser();
+  const { user, isInitialized } = useUser();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -26,7 +26,6 @@ export default function SidebarLeft() {
     }
   }, []);
 
-  // 🔐 Aman: Hooks di atas sudah dipanggil sebelum ini
   if (!isInitialized) return null;
 
   const menuItems = [
@@ -37,13 +36,15 @@ export default function SidebarLeft() {
     { href: "/notifications", label: "Notifications", icon: Bell },
   ];
 
-  const getUserItems = user ? [
-    { href: "/post/create-post", label: "Create Post", icon: PlusSquare },
-    { href: `/profile/me`, label: "Profile", icon: User },
-  ] : [];
+  const getUserItems = user
+    ? [
+        { href: "/post/create-post", label: "Create Post", icon: PlusSquare },
+        { href: `/profile/me`, label: "Profile", icon: User },
+      ]
+    : [];
 
   return (
-    <aside className="fixed left-0 top-0 w-72 h-screen overflow-y-auto border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 hidden md:block z-20">
+    <aside className="fixed left-0 top-0 w-72 h-screen overflow-y-auto border-r border-gray-300 z-100 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 hidden md:block">
       <h2 className="font-semibold text-lg mb-4">Impactra</h2>
       <ul className="space-y-2">
         {menuItems.map(({ href, label, icon: Icon }) => (
@@ -71,15 +72,9 @@ export default function SidebarLeft() {
                 </Link>
               </li>
             ))}
-            <li>
-              <button
-                onClick={logout}
-                className="flex w-full cursor-pointer items-center gap-3 px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-              >
-                <LogOut className="w-5 h-5" />
-                <span className="text-sm font-medium">Logout</span>
-              </button>
-            </li>
+            {/* <li>
+              <LogoutButton />
+            </li> */}
           </>
         ) : (
           <li>
