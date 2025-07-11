@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import { fetchPrivateProfile } from '@/lib/profileService';
 import Link from 'next/link';
 import Image from 'next/image';
-import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
-import HeaderSidebarContent from '@/components/HeaderSidebarContent';
 import { useRouter } from 'next/navigation';
 import { Menu } from 'lucide-react';
-import RightSidebar from '@/components/RIghtSidebar';
 import { Profile } from '@/types/profile-types';
+import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
+import HeaderSidebarContent from '@/components/layouts/HeaderSidebarContent';
+import RightSidebar from '@/components/layouts/RIghtSidebar';
 
 export default function MyProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);

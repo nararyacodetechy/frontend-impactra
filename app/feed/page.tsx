@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import PostCard from '@/components/posts/PostCard';
 import { fetchAllPosts } from '@/lib/postService';
-import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
 import { Post } from '@/types/post-types';
+import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
 
 export default function FeedPage() {
   const [posts, setPosts] = useState<Post[]>([]);

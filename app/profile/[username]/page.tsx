@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchPublicProfile } from '@/lib/profileService';
 import Link from 'next/link';
-import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
 import { Profile } from '@/types/profile-types';
+import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
 
 export default function PublicProfilePage() {
   const { username } = useParams();

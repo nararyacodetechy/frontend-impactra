@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
-import LogoutButton from "@/components/LogoutButton"; 
 
 export default function SidebarLeft() {
   const [hasToken, setHasToken] = useState(false);
@@ -72,9 +71,6 @@ export default function SidebarLeft() {
                 </Link>
               </li>
             ))}
-            {/* <li>
-              <LogoutButton />
-            </li> */}
           </>
         ) : (
           <li>

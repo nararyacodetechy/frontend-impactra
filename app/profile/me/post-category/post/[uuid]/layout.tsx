@@ -1,6 +1,6 @@
+import HeaderBack from "@/components/layouts/HeaderBack";
 import SidebarLeft from "@/components/layouts/SidebarLeft";
 import SidebarRight from "@/components/layouts/SidebarRight";
-import HeaderBack from "@/components/HeaderBack";
 
 export default function PostDetailLayout({ children }: { children: React.ReactNode }) {
   return (

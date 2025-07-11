@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { fetchPostCategoryById } from '@/lib/postService';
-import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
 import type { PostCategory } from '@/types/post-types';
+import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
 
 export default function PostCategoryDetailPage() {
   const { uuid } = useParams();

@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { fetchPrivateProfile, updatePrivateProfile } from '@/lib/profileService';
-import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
 import { useRouter } from 'next/navigation';
 import { uploadImageToCloud } from '@/lib/cloudService';
 import { Profile } from '@/types/profile-types';
+import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
 
 export default function EditProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
