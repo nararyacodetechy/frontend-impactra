@@ -7,7 +7,7 @@ import {
   UserPlus, LogOut
 } from 'lucide-react';
 import { useEffect } from 'react';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '../generals/LogoutButton';
 
 type Props = {
   isOpen: boolean;

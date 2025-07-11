@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Trash2, ImagePlus, Loader2 } from 'lucide-react';
 import { useUser } from '@/context/UserContext';
-import { OverlayLoadingModal } from './OverlayLoadingModal';
+import { OverlayLoadingModal } from '../generals/OverlayLoadingModal';
 import { fetchListPostCategories, createPostCategory } from '@/lib/postService';
 import { PostCategory } from '@/types/post-types';
 import { uploadImageToCloud } from '@/lib/cloudService';

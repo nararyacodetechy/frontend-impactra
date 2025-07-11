@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { requestSetPassword } from '@/lib/authServices';
-import GoogleLoginButton from '@/components/GoogleLoginButton';
+import GoogleLoginButton from '@/components/generals/GoogleLoginButton';
 
 export default function GoogleAccountDetected() {
   const router = useRouter();

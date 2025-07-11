@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchPostByUUID } from '@/lib/postService';
-import PostDetailCard from '@/components/PostDetailCard';
+import PostDetailCard from '@/components/posts/PostDetailCard';
 import { Post } from '@/types/post-types';
 
 export default function PostDetailPostPage() {

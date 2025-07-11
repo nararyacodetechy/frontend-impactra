@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
-import RightSidebar from './RIghtSidebar';
 import { getLoginSessions, loginUser } from '@/lib/authServices';
-import SwitchAccountModal from './SwitchAccountModal';
+import SwitchAccountModal from '../auth/SwitchAccountModal';
 import { maskEmail } from '@/utils/maskEmail';
+import RightSidebar from './RIghtSidebar';
 
 type Session = {
   id: number;

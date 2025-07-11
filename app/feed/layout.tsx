@@ -1,5 +1,5 @@
-import SidebarLeft from "@/components/SidebarLeft";
-import SidebarRight from "@/components/SidebarRight";
+import SidebarLeft from "@/components/layouts/SidebarLeft";
+import SidebarRight from "@/components/layouts/SidebarRight";
 import HeaderCategory from "@/components/HeaderCategory";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
