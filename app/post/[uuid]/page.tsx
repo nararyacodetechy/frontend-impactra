@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { fetchPostByUUID, Post } from '@/lib/postService';
+import { fetchPostByUUID } from '@/lib/postService';
 import PostDetailCard from '@/components/PostDetailCard';
+import { Post } from '@/types/post-types';
 
-export default function PostDetailPage() {
+export default function PostDetailPostPage() {
   const params = useParams();
   const uuid = params.uuid as string;
   const [post, setPost] = useState<Post | null>(null);

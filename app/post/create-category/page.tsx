@@ -1,6 +1,6 @@
 'use client';
 
-import CreatePostForm from '@/components/CreatePostForm';
+import CreatePostForm from '@/components/CreateCategoryPostForm';
 
 export default function CreatePostPage() {
   return (

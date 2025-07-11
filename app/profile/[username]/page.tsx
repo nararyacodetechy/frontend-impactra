@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { fetchPublicProfile, Profile } from '@/lib/profileService';
+import { fetchPublicProfile } from '@/lib/profileService';
 import Link from 'next/link';
 import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
+import { Profile } from '@/types/profile-types';
 
 export default function PublicProfilePage() {
   const { username } = useParams();
@@ -84,7 +85,7 @@ export default function PublicProfilePage() {
               <div className="grid grid-cols-3 gap-4">
                 {profile.posts.map((post) => (
                   <Link
-                    key={post.id}
+                    key={post.uuid}
                     href={`/post/${post.uuid}`}
                     className="relative aspect-square overflow-hidden rounded-lg group"
                   >

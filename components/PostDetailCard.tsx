@@ -1,9 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
-import { Post } from '@/lib/postService';
 import { useState } from 'react';
 import {
   Heart,
@@ -13,6 +11,7 @@ import {
   Share2,
   Bookmark,
 } from 'lucide-react';
+import { Post } from '@/types/post-types';
 
 type Props = {
   post: Post;

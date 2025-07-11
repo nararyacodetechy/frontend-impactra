@@ -38,7 +38,7 @@ export default function SidebarLeft() {
 
   const getUserItems = user
     ? [
-        { href: "/post/create-post", label: "Create Post", icon: PlusSquare },
+        { href: "/post/create-category", label: "Create Post", icon: PlusSquare },
         { href: `/profile/me`, label: "Profile", icon: User },
       ]
     : [];

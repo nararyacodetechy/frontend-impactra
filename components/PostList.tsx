@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Post, fetchAllPosts } from '@/lib/postService';
+import { fetchAllPosts } from '@/lib/postService';
 import PostCard from './PostCard';
+import { Post } from '@/types/post-types';
 
 export default function PostList() {
     const [posts, setPosts] = useState<Post[]>([]);

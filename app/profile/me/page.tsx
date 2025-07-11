@@ -1,7 +1,8 @@
+// app/profile/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchPrivateProfile, Profile } from '@/lib/profileService';
+import { fetchPrivateProfile } from '@/lib/profileService';
 import Link from 'next/link';
 import Image from 'next/image';
 import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
@@ -9,6 +10,7 @@ import HeaderSidebarContent from '@/components/HeaderSidebarContent';
 import { useRouter } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import RightSidebar from '@/components/RIghtSidebar';
+import { Profile } from '@/types/profile-types';
 
 export default function MyProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -25,7 +27,6 @@ export default function MyProfilePage() {
 
   useEffect(() => {
     const loadProfile = async () => {
-      const token = localStorage.getItem('token');
       if (!token) {
         setError('User belum login');
         setLoading(false);
@@ -43,7 +44,7 @@ export default function MyProfilePage() {
     };
 
     loadProfile();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (success || error) {
@@ -57,35 +58,35 @@ export default function MyProfilePage() {
 
   const tabs = {
     Stats: [
-      { label: "Posts", value: profile?.posts?.length || 0 },
-      { label: "Assisted", value: 5775 },
-      { label: "Integrity", value: 4853 },
+      { label: 'Posts', value: profile?.posts?.length || 0 },
+      { label: 'Assisted', value: 5775 },
+      { label: 'Integrity', value: 4853 },
     ],
     Support: [
-      { label: "Investment", value: "Rp. 21.482.900,00" },
+      { label: 'Investment', value: 'Rp. 21.482.900,00' },
     ],
     Impact: [
-      { label: "Contributions", value: 4565 },
-      { label: "Problems Solved", value: 49 },
-      { label: "Ideas Created", value: 14 },
-      { label: "Projects", value: 8 },
-      { label: "Skills Shared", value: 26 },
-      { label: "Events Participated", value: 245 },
+      { label: 'Contributions', value: 4565 },
+      { label: 'Problems Solved', value: 49 },
+      { label: 'Ideas Created', value: 14 },
+      { label: 'Projects', value: 8 },
+      { label: 'Skills Shared', value: 26 },
+      { label: 'Events Participated', value: 245 },
     ],
     Growth: [
-      { label: "Failures Shared", value: 154 },
-      { label: "Challenges Overcome", value: 2 },
-      { label: "Lessons Documented", value: 53 },
-      { label: "Feedbacks Given", value: 542 },
+      { label: 'Failures Shared', value: 154 },
+      { label: 'Challenges Overcome', value: 2 },
+      { label: 'Lessons Documented', value: 53 },
+      { label: 'Feedbacks Given', value: 542 },
     ],
     Collaboration: [
-      { label: "Collaborate", value: 155 },
-      { label: "Relations", value: "10.420" },
-      { label: "Co-creations", value: 0 },
-      { label: "Advices", value: 132 },
+      { label: 'Collaborate', value: 155 },
+      { label: 'Relations', value: '10.420' },
+      { label: 'Co-creations', value: 0 },
+      { label: 'Advices', value: 132 },
     ],
     Recognition: [
-      { label: "Positive Reviews", value: 424 },
+      { label: 'Positive Reviews', value: 424 },
     ],
   };
 
@@ -98,7 +99,6 @@ export default function MyProfilePage() {
           {/* Header + Menu */}
           <div className="flex items-center justify-between px-4 py-4">
             <HeaderSidebarContent username={profile.username} token={token} currentEmail={profile.email} />
-
             <button
               onClick={() => setShowSidebar(true)}
               className="text-gray-600 dark:text-gray-300 hover:text-blue-500 cursor-pointer"
@@ -113,11 +113,7 @@ export default function MyProfilePage() {
           {/* Avatar & Info */}
           <div className="relative flex items-start gap-6 px-4 p-4">
             <img
-              src={
-                !imgError && profile.avatar_url
-                  ? profile.avatar_url
-                  : '/icons/default-profile.png'
-              }
+              src={imgError || !profile.avatar_url ? '/icons/default-profile.png' : profile.avatar_url}
               onError={() => setImgError(true)}
               alt={profile.username}
               className="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover"
@@ -146,8 +142,8 @@ export default function MyProfilePage() {
             </div>
           </div>
 
+          {/* Tabs */}
           <div className="w-full">
-            {/* Tab Buttons */}
             <div className="flex flex-wrap justify-start gap-2 border-b pt-4 border-gray-300 dark:border-gray-700 px-4">
               {Object.keys(tabs).map((tab) => (
                 <button
@@ -155,8 +151,8 @@ export default function MyProfilePage() {
                   onClick={() => setActiveTab(tab as typeof activeTab)}
                   className={`px-4 py-2 text-sm font-medium cursor-pointer ${
                     activeTab === tab
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                   }`}
                 >
                   {tab}
@@ -164,7 +160,6 @@ export default function MyProfilePage() {
               ))}
             </div>
 
-            {/* Tab Content */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 py-5 border-b border-gray-300 dark:border-gray-700 text-center text-sm text-gray-600 dark:text-gray-300">
               {tabs[activeTab]?.map((item, index, array) => (
                 <div
@@ -178,41 +173,64 @@ export default function MyProfilePage() {
                 </div>
               ))}
             </div>
-
           </div>
 
-          {/* Posts Section */}
-          <div className="p-4 relative">
-            <h3 className="font-semibold text-lg mb-4">Postingan Saya</h3>
-
-            {profile.posts.length === 0 ? (
-              <p className="text-center text-gray-500">Kamu belum membuat postingan.</p>
-            ) : (
-              <div className="grid grid-cols-3 gap-4">
-                {profile.posts.map((post) => (
-                  <div key={post.id} className="relative aspect-square overflow-hidden rounded-lg">
-                    {post.image_url ? (
-                      <Link href={`/post/${post.uuid}`} className="relative block w-full h-80 bg-gray-200 dark:bg-gray-800">
-                        <Image
-                          src={post.image_url}
-                          alt="Post"
-                          className="object-cover"
-                          fill
-                          onError={() => setImgError(true)}
-                        />
-                      </Link>
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-500 text-sm">
-                        Tanpa Gambar
-                      </div>
-                    )}
-                  </div>
-                ))}
+          {/* Categories Section */}
+          <div className="p-4">
+            <div className="flex justify-between">
+              <h2 className="text-2xl font-bold mb-4">Kategori Proyek</h2>
+              <div className="p-4">
+                <Link href="/profile/create-category" className="bg-blue-500 text-white px-4 py-2 rounded">
+                  Buat Kategori Baru
+                </Link>
               </div>
+            </div>
+            {profile.post_categories && profile.post_categories.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {profile.post_categories.map((category) => {
+                  const firstImage = category.category.image_url || category.category.posts?.[0]?.image_url;
+                  return (
+                    <Link
+                      href={`/profile/post-category/${category.category.uuid}`}
+                      key={category.category.uuid}
+                      className="border border-gray-300 dark:border-gray-700 rounded-md overflow-hidden shadow-sm hover:shadow-lg transition bg-white dark:bg-gray-800"
+                    >
+                      <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700">
+                        {firstImage ? (
+                          <Image
+                            src={firstImage}
+                            alt={category.category.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center w-full h-full text-gray-500">
+                            Tanpa Gambar
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-3">
+                        <h2 className="font-semibold text-lg">{category.category.name}</h2>
+                        <p className="text-sm text-gray-500">
+                          Tipe: {category.name} ({category.description || 'Tanpa deskripsi tipe'})
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {category.category.description || 'Tanpa deskripsi proyek'}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-2">
+                          Dibuat: {new Date(category.category.created_at).toLocaleDateString('id-ID')}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-gray-500">Belum ada kategori proyek.</p>
             )}
           </div>
 
-          {/* Right Slide Sidebar (inside main) */}
+          {/* Right Slide Sidebar */}
           <div className="absolute inset-0 pointer-events-none">
             <RightSidebar isOpen={showSidebar} onClose={() => setShowSidebar(false)} />
           </div>

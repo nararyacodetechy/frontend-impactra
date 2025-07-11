@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import PostCard from '@/components/PostCard';
-import { fetchAllPosts, Post } from '@/lib/postService';
+import { fetchAllPosts } from '@/lib/postService';
 import { OverlayLoadingModal } from '@/components/OverlayLoadingModal';
+import { Post } from '@/types/post-types';
 
 export default function FeedPage() {
   const [posts, setPosts] = useState<Post[]>([]);

@@ -1,20 +1,23 @@
-import axios from 'axios';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const CLOUDINARY_UPLOAD_PRESET = 'impactra_preset';
+const CLOUDINARY_UPLOAD_FOLDER = 'impactra/posts'; // Atur sesuai kebutuhan struktur folder kamu
 
 export async function uploadImageToCloud(file: File): Promise<string> {
-  const token = localStorage.getItem('token');
-  if (!token) throw new Error('User belum login');
-
   const formData = new FormData();
   formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  formData.append('folder', CLOUDINARY_UPLOAD_FOLDER); // optional tapi direkomendasikan
 
-  const res = await axios.post(`${API_BASE_URL}/cloud/upload`, formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
-    },
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: formData,
   });
 
-  return res.data.url;
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error?.message || 'Gagal upload gambar ke Cloudinary');
+  }
+
+  const data = await res.json();
+  return data.secure_url;
 }

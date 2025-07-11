@@ -12,8 +12,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { Post } from '@/lib/postService';
 import Link from 'next/link';
+import { Post } from '@/types/post-types';
 
 type Props = {
   post: Post;
@@ -26,7 +26,6 @@ export default function PostCard({ post }: Props) {
   const supportCount = post.supports.length;
   const commentCount = post.comments.length;
 
-  console.log("post",post)
   const handleSupport = () => {
     setLiked(!liked);
     // TODO: panggil supportPost / unsupportPost di sini
