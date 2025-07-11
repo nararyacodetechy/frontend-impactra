@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchPostByUUID } from '@/lib/postService';
-import PostDetailCard from '@/components/posts/PostDetailCard';
+import PostDetail from '@/components/posts/PostDetail';
 import { Post } from '@/types/post-types';
 
 export default function PostDetailPostPage() {
@@ -33,7 +33,7 @@ export default function PostDetailPostPage() {
 
   return (
     <div className="">
-      <PostDetailCard post={post} />
+      <PostDetail post={post} />
     </div>
   );
 }

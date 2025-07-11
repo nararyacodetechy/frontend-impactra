@@ -9,7 +9,7 @@ type Props = {
   onCancel: () => void;
 };
 
-export default function SwitchAccountModal({ email, onConfirm, onCancel }: Props) {
+export default function SwitchAccountPopup({ email, onConfirm, onCancel }: Props) {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import { getLoginSessions, loginUser } from '@/lib/authServices';
-import SwitchAccountModal from '../auth/SwitchAccountModal';
+import SwitchAccountModal from '../auth/SwitchAccountPopup';
 import { maskEmail } from '@/utils/maskEmail';
-import RightSidebar from './RIghtSidebar';
+import MenuSidebarRight from './MenuSidebarRight';
 
 type Session = {
   id: number;
@@ -25,7 +25,7 @@ type Props = {
     currentEmail: string;
 };  
 
-export default function HeaderSidebarContent({ username, token, currentEmail }: Props) {
+export default function HeaderSwitchAccount({ username, token, currentEmail }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [accountListOpen, setAccountListOpen] = useState(false);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -119,7 +119,7 @@ export default function HeaderSidebarContent({ username, token, currentEmail }: 
         />
       )}
 
-      <RightSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <MenuSidebarRight isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     </>
   );
 }

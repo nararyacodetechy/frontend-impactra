@@ -15,7 +15,7 @@ type Props = {
   redirectTo?: string;
 };
 
-export default function CreateCategoryPostForm({ redirectTo }: Props) {
+export default function FormCreatePostCategory({ redirectTo }: Props) {
   const { user } = useUser();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);

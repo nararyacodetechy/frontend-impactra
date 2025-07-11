@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 
-export default function SidebarLeft() {
+export default function MainSidebarLeft() {
   const [hasToken, setHasToken] = useState(false);
   const { user, isInitialized } = useUser();
 

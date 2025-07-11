@@ -9,8 +9,8 @@ import { useRouter } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import { Profile } from '@/types/profile-types';
 import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
-import HeaderSidebarContent from '@/components/layouts/HeaderSidebarContent';
-import RightSidebar from '@/components/layouts/RIghtSidebar';
+import HeaderSwitchAccount from '@/components/layouts/HeaderSwitchAccount';
+import MenuSidebarRight from '@/components/layouts/MenuSidebarRight';
 
 export default function MyProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -98,7 +98,7 @@ export default function MyProfilePage() {
         <div className="w-full min-h-screen bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 relative">
           {/* Header + Menu */}
           <div className="flex items-center justify-between px-4 py-4">
-            <HeaderSidebarContent username={profile.username} token={token} currentEmail={profile.email} />
+            <HeaderSwitchAccount username={profile.username} token={token} currentEmail={profile.email} />
             <button
               onClick={() => setShowSidebar(true)}
               className="text-gray-600 dark:text-gray-300 hover:text-blue-500 cursor-pointer"
@@ -232,7 +232,7 @@ export default function MyProfilePage() {
 
           {/* Right Slide Sidebar */}
           <div className="absolute inset-0 pointer-events-none">
-            <RightSidebar isOpen={showSidebar} onClose={() => setShowSidebar(false)} />
+            <MenuSidebarRight isOpen={showSidebar} onClose={() => setShowSidebar(false)} />
           </div>
         </div>
       )}

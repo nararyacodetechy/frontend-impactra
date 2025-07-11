@@ -59,7 +59,7 @@ const sidebarSections = [
   },
 ];
 
-export default function RightSidebar({ isOpen, onClose }: Props) {
+export default function MenuSidebarRight({ isOpen, onClose }: Props) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();

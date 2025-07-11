@@ -1,16 +1,16 @@
 import HeaderBack from "@/components/layouts/HeaderBack";
-import SidebarLeft from "@/components/layouts/SidebarLeft";
-import SidebarRight from "@/components/layouts/SidebarRight";
+import MainSidebarLeft from "@/components/layouts/MainSidebarLeft";
+import MainSidebarRight from "@/components/layouts/MainSidebarRight";
 
 export default function PostDetailLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <SidebarLeft />
+      <MainSidebarLeft />
       <div className="">
         <HeaderBack />
         <main className="w-full min-h-screen">{children}</main>
       </div>
-      <SidebarRight />
+      <MainSidebarRight />
     </>
   );
 }

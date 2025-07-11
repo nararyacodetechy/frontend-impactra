@@ -1,11 +1,11 @@
 'use client';
 
-import CreatePostForm from '@/components/post-categories/CreateCategoryPostForm';
+import FormCreatePostCategory from '@/components/post-categories/FormCreatePostCategory';
 
 export default function CreatePostPage() {
   return (
     <div className="min-h-screen">
-      <CreatePostForm redirectTo="/feed" />
+      <FormCreatePostCategory redirectTo="/feed" />
     </div>
   );
 }

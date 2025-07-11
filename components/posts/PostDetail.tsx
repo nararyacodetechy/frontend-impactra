@@ -5,7 +5,6 @@ import { formatDistanceToNow } from 'date-fns';
 import { useState } from 'react';
 import {
   Heart,
-  MessageCircle,
   Coins,
   ImageOff,
   Share2,
@@ -17,7 +16,7 @@ type Props = {
   post: Post;
 };
 
-export default function PostDetailCard({ post }: Props) {
+export default function PostDetail({ post }: Props) {
   const [liked, setLiked] = useState(false);
   const [imgError, setImgError] = useState(false);
 
