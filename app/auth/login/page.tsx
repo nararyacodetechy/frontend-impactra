@@ -5,13 +5,13 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-xl space-y-6 border border-gray-300 dark:border-gray-700">
-      <h1 className="text-2xl font-bold text-center">Masuk ke Impactra</h1>
+    <div className="bg-white dark:bg-black p-6 rounded-lg shadow-xl space-y-6">
+      <h1 className="text-4xl font-bold text-center">Sign In</h1>
       <AuthForm type="login" />
       <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-        Belum punya akun?{" "}
-        <Link href="/auth/register" className="text-blue-600 hover:underline">
-          Daftar di sini
+        Don't have any account?{" "}
+        <Link href="/auth/register" className="hover:underline text-white">
+          Sign Up Here
         </Link>
       </p>
     </div>

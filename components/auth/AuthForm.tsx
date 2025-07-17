@@ -46,7 +46,7 @@ export default function AuthForm({ type }: AuthFormProps) {
         const token = res.access_token || res.data?.access_token;
       
         if (!token) {
-          throw new Error("Token tidak ditemukan dalam response");
+          throw new Error("Token not found on response");
         }
       
         login(token); // ✅ ini benar
@@ -60,7 +60,7 @@ export default function AuthForm({ type }: AuthFormProps) {
       ) {
         router.push(`/auth/request-set-password?email=${encodeURIComponent(email)}`);
       } else {
-        setError(err.message || "Terjadi kesalahan");
+        setError(err.message || "Something Wrong, please try again later!");
       }
     } finally {
       setLoading(false);
@@ -79,7 +79,7 @@ export default function AuthForm({ type }: AuthFormProps) {
             required
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="w-full p-2 border rounded bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+            className="w-full p-2 border rounded bg-white dark:bg-black border-gray-300 dark:border-gray-700"
           />
         )}
 
@@ -89,7 +89,7 @@ export default function AuthForm({ type }: AuthFormProps) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800"
+          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-black"
         />
 
         <input
@@ -98,7 +98,7 @@ export default function AuthForm({ type }: AuthFormProps) {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800"
+          className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-black"
         />
 
         <button
@@ -108,18 +108,18 @@ export default function AuthForm({ type }: AuthFormProps) {
         >
           {loading
             ? type === "register"
-              ? "Mendaftar..."
-              : "Masuk..."
+              ? "Processing Sign Up..."
+              : "Processing Sign In..."
             : type === "login"
-            ? "Masuk"
-            : "Daftar"}
+            ? "Sign In"
+            : "Sign Up"}
         </button>
       </form>
 
       {/* Pisahkan tombol Google di luar form */}
       <div className="text-center my-4">
-        <p className="mb-4">atau</p>
-        <GoogleLoginButton label={type === 'register' ? "Daftar dengan Google" : "Login dengan Google"} />
+        <p className="mb-4">or</p>
+        <GoogleLoginButton label={type === 'register' ? "Sign Up with Google" : "Sign In with Google"} />
       </div>
 
     </div>

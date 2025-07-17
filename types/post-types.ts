@@ -3,8 +3,8 @@ export type Post = {
   id: number;
   uuid: string;
   title?: string;
-  content: string;
-  image_url: string | null;
+  content: string | null; 
+  image_urls?: string[];
   created_at: string;
   author: {
     id: number;
@@ -26,6 +26,7 @@ export type PostCategory = {
   name: string; // Nama dari list_post_category (misalnya, new-idea)
   description?: string; // Deskripsi dari list_post_category
   category: {
+    id: number; // from post_category
     uuid: string; // UUID dari post_category
     name: string; // Nama proyek dari post_category
     description?: string; // Deskripsi proyek dari post_category

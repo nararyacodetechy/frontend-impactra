@@ -50,10 +50,10 @@ export default function PostDetail({ post }: Props) {
       </div>
 
       {/* Image */}
-      {post.image_url && !imgError ? (
+      {post.images && post.images.length > 0 && !imgError ? (
         <div className="relative w-full aspect-square bg-gray-200 dark:bg-gray-800">
           <Image
-            src={post.image_url}
+            src={post.images[0].url}
             alt="Post"
             fill
             className="object-cover"

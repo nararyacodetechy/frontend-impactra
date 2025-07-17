@@ -37,13 +37,14 @@ export default function MainSidebarLeft() {
 
   const getUserItems = user
     ? [
-        { href: "/post/create-category", label: "Create Post", icon: PlusSquare },
+        { href: "/profile/me/create-post", label: "Create Post", icon: PlusSquare },
+        { href: "/profile/me/post-category/create-category", label: "Create Categorize", icon: PlusSquare },
         { href: `/profile/me`, label: "Profile", icon: User },
       ]
     : [];
 
   return (
-    <aside className="fixed left-0 top-0 w-72 h-screen overflow-y-auto border-r border-gray-300 z-100 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 hidden md:block">
+    <aside className="fixed left-0 top-0 w-72 h-screen overflow-y-auto z-50 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white p-6 hidden md:block">
       <h2 className="font-semibold text-lg mb-4">Impactra</h2>
       <ul className="space-y-2">
         {menuItems.map(({ href, label, icon: Icon }) => (

@@ -41,8 +41,6 @@ export async function createPostCategory(
   token: string,
   image_url?: string,
   visibility_mode?: 'full_public' | 'partial_public' | 'private',
-  idea_details?: string,
-  internal_notes?: string,
 ): Promise<PostCategory> {
   const res = await fetch(`${API_BASE_URL}/post-categories`, {
     method: 'POST',
@@ -56,8 +54,6 @@ export async function createPostCategory(
       template_id: templateId,
       image_url,
       visibility_mode,
-      idea_details,
-      internal_notes,
     }),
   });
 
@@ -70,17 +66,13 @@ export async function createPostCategory(
   return data.data;
 }
 
-// Fungsi untuk membuat post (jika diperlukan)
 export async function createPost(
-  title: string,
   content: string,
   token: string,
-  image_url?: string,
-  visibility_mode?: 'full_public' | 'partial_public' | 'private',
-  category_id?: number,
-  idea_details?: string,
-  internal_notes?: string,
-): Promise<Post> {
+  images: { url: string }[],
+  is_public: boolean = true,
+  category_id?: number
+) {
   const res = await fetch(`${API_BASE_URL}/posts`, {
     method: 'POST',
     headers: {
@@ -88,13 +80,10 @@ export async function createPost(
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      title,
       content,
-      image_url,
-      visibility_mode,
+      images, // <--- benar! ini yang dikirim
+      is_public,
       category_id,
-      idea_details,
-      internal_notes,
     }),
   });
 
@@ -107,6 +96,7 @@ export async function createPost(
   return data.data;
 }
 
+
 export async function fetchAllPosts(): Promise<Post[]> {
   const res = await axios.get(`${API_BASE_URL}/posts`);
   if (res.data.status !== 'success') throw new Error('Gagal mengambil data post');
@@ -116,5 +106,5 @@ export async function fetchAllPosts(): Promise<Post[]> {
 export async function fetchPostByUUID(uuid: string): Promise<Post> {
   const res = await axios.get(`${API_BASE_URL}/posts/uuid/${uuid}`);
   if (res.data.status !== 'success') throw new Error('Post tidak ditemukan');
-  return res.data;
+  return res.data.data;
 }

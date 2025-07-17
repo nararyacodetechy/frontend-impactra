@@ -9,6 +9,8 @@ import {
   ImageOff,
   Share2,
   Bookmark,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
@@ -22,17 +24,25 @@ type Props = {
 export default function PostCard({ post }: Props) {
   const [liked, setLiked] = useState(false);
   const [imgError, setImgError] = useState(false);
-
-  const supportCount = post.supports.length;
-  const commentCount = post.comments.length;
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSupport = () => {
     setLiked(!liked);
     // TODO: panggil supportPost / unsupportPost di sini
   };
 
+  const goToPrev = () => {
+    if (!post.image_urls || post.image_urls.length === 0) return;
+    setCurrentIndex((prev) => (prev === 0 ? post.image_urls!.length - 1 : prev - 1));
+  };
+  
+  const goToNext = () => {
+    if (!post.image_urls || post.image_urls.length === 0) return;
+    setCurrentIndex((prev) => (prev === post.image_urls!.length - 1 ? 0 : prev + 1));
+  };  
+
   return (
-    <div className="border w-full border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden bg-white dark:bg-gray-900">
+    <div className="border w-full border-gray-300 dark:border-gray-900 shadow-sm overflow-hidden text-black dark:text-white">
       {/* Header */}
       <div className="px-4 py-3 flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
         <Link href={`/profile/${post.author.username}`} className="flex items-center gap-3 hover:underline">
@@ -59,24 +69,47 @@ export default function PostCard({ post }: Props) {
         </Link>
       </div>
 
-      {/* Image */}
-      {post.image_url && !imgError ? (
-        <Link href={`/post/${post.uuid}`} className="relative block w-full h-80 bg-gray-200 dark:bg-gray-800">
+      {/* Image Carousel */}
+      {post.image_urls && post.image_urls.length > 0 && !imgError ? (
+        <div className="relative w-full h-80 bg-gray-200 dark:bg-gray-800">
           <Image
-            src={post.image_url}
+            src={post.image_urls[currentIndex]}
             alt="Post"
             className="object-cover"
             fill
             onError={() => setImgError(true)}
           />
-        </Link>
-      ) : post.image_url && imgError ? (
+          {post.image_urls.length > 1 && (
+            <>
+              <button
+                onClick={goToPrev}
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-1 rounded-full hover:bg-black/60 z-10"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={goToNext}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-1 rounded-full hover:bg-black/60 z-10"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                {post.image_urls.map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`w-2 h-2 rounded-full ${idx === currentIndex ? 'bg-white' : 'bg-white/40'}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ) : post.image_urls && imgError ? (
         <div className="flex flex-col items-center justify-center w-full h-80 bg-gray-100 dark:bg-gray-800 text-gray-500">
           <ImageOff className="w-10 h-10 mb-2" />
           <p className="text-sm">Image not available</p>
         </div>
       ) : null}
-
 
       {/* Caption / Content */}
       <div className="p-4">
@@ -88,7 +121,6 @@ export default function PostCard({ post }: Props) {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Coins className="w-4 h-4" />
-            <span>{supportCount} dukungan</span>
           </div>
           <div className="flex items-center gap-4 flex-wrap">
             <button
@@ -112,7 +144,6 @@ export default function PostCard({ post }: Props) {
             </div>
             <div className="flex items-center gap-1">
               <MessageCircle className="w-4 h-4" />
-              <span>{commentCount}</span>
             </div>
           </div>
         </div>

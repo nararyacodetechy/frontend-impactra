@@ -21,5 +21,5 @@ export default function LoginSuccess() {
     }
   }, [params, login, router]);
 
-  return <p className="text-center">Login dengan Google berhasil. Mengarahkan...</p>;
+  return <p className="text-center">Sign In with Google Successfully. Redirecting...</p>;
 }

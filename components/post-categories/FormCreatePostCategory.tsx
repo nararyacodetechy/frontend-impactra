@@ -1,4 +1,4 @@
-// components/CreateCategoryPostForm.tsx
+// components/CreateCategorizePostForm.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +15,7 @@ type Props = {
   redirectTo?: string;
 };
 
-export default function FormCreatePostCategory({ redirectTo }: Props) {
+export default function FormCreatePostCategorize({ redirectTo }: Props) {
   const { user } = useUser();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -27,8 +27,6 @@ export default function FormCreatePostCategory({ redirectTo }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [visibilityMode, setVisibilityMode] = useState<'full_public' | 'partial_public' | 'private'>('full_public');
-  const [ideaDetails, setIdeaDetails] = useState('');
-  const [internalNotes, setInternalNotes] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -61,9 +59,9 @@ export default function FormCreatePostCategory({ redirectTo }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    if (!token) return alert('Anda belum login!');
-    if (!name.trim()) return alert('Nama kategori wajib diisi');
-    if (!templateId) return alert('Pilih tipe kategori terlebih dahulu');
+    if (!token) return alert('Need login First');
+    if (!name.trim()) return alert('Add Categorize Name First');
+    if (!templateId) return alert('Select Type Categorize First');
 
     try {
       setLoading(true);
@@ -79,14 +77,12 @@ export default function FormCreatePostCategory({ redirectTo }: Props) {
         token,
         image_url,
         visibilityMode,
-        ideaDetails,
-        internalNotes,
       );
 
-      alert('Kategori berhasil dibuat!');
+      alert('Categorize Successfully Created!');
       router.push(redirectTo || '/profile/me');
     } catch (err: any) {
-      alert(err.message || 'Gagal membuat kategori');
+      alert(err.message || 'Failed to create new Categorize, Please try again later!');
     } finally {
       setLoading(false);
     }
@@ -100,11 +96,29 @@ export default function FormCreatePostCategory({ redirectTo }: Props) {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-900 min-h-screen shadow-md p-4 border border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-black min-h-screen shadow-md p-4 flex flex-col gap-5"
       >
+
+        {/* Tipe Kategori */}
+        <div className="mb-3">
+          <label className="block mb-1 text-sm font-medium">Type Categorize</label>
+          <select
+            value={templateId ?? ''}
+            onChange={(e) => setTemplateId(Number(e.target.value) || null)}
+            className="w-full p-2 border rounded-md bg-white dark:bg-black dark:border-gray-600 dark:text-white"
+          >
+            <option value="">Select Type Categorize</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* Image Preview */}
         {imagePreview && (
-          <div className="relative w-full h-64 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 mb-4">
+          <div className="relative w-full h-64 rounded-md overflow-hidden bg-gray-100 dark:bg-black/50 mb-4">
             <Image src={imagePreview} alt="Preview" fill className="object-cover" />
             <button
               type="button"
@@ -121,92 +135,51 @@ export default function FormCreatePostCategory({ redirectTo }: Props) {
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => fileInputRef.current?.click()}
-          className="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-md h-32 cursor-pointer hover:border-blue-400"
+          className="mb-4 cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-md h-32 cursor-pointer hover:border-blue-400"
         >
-          <label className="flex flex-col items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 w-full h-full">
+          <label className="flex flex-col cursor-pointer items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 w-full h-full">
             <ImagePlus size={20} />
-            <span>Klik atau tarik gambar ke sini</span>
+            <span>Click or Drag Picture here</span>
             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileInputChange} hidden />
           </label>
         </div>
 
         {/* Nama Kategori */}
         <div className="mb-3">
-          <label className="block mb-1 text-sm font-medium">Nama Kategori</label>
+          <label className="block mb-1 text-sm font-medium">Name Categorize</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Nama kategori (misalnya, Membuat Model AI)"
-            className="w-full p-3 rounded-md border dark:border-gray-600 bg-gray-50 dark:bg-gray-800 dark:text-white"
+            placeholder="Categorize Name, Example (Create a new model AI Face Recognition with YOLOv8)"
+            className="w-full p-3 rounded-md border dark:border-gray-600 dark:bg-black/50 dark:text-white"
           />
         </div>
 
         {/* Deskripsi Kategori */}
         <div className="mb-3">
-          <label className="block mb-1 text-sm font-medium">Deskripsi</label>
+          <label className="block mb-1 text-sm font-medium">Purpose Categorize</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-            placeholder="Deskripsikan kategori Anda"
-            className="w-full p-3 rounded-md border dark:border-gray-600 bg-gray-50 dark:bg-gray-800 dark:text-white"
+            rows={2}
+            placeholder="Describe your description Categorize"
+            className="w-full p-3 rounded-md border dark:border-gray-600 dark:text-white"
           />
-        </div>
-
-        {/* Tipe Kategori */}
-        <div className="mb-3">
-          <label className="block mb-1 text-sm font-medium">Tipe Kategori</label>
-          <select
-            value={templateId ?? ''}
-            onChange={(e) => setTemplateId(Number(e.target.value) || null)}
-            className="w-full p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-          >
-            <option value="">Pilih tipe kategori</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
         </div>
 
         {/* Visibility */}
         <div className="mb-3">
-          <label className="block mb-1 text-sm font-medium">Visibilitas</label>
+          <label className="block mb-1 text-sm font-medium">Visibility</label>
           <select
             value={visibilityMode}
             onChange={(e) => setVisibilityMode(e.target.value as any)}
-            className="w-full p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+            className="w-full p-2 border rounded-md bg-white dark:bg-black dark:border-gray-600 dark:text-white"
           >
-            <option value="full_public">Publik Penuh</option>
-            <option value="partial_public">Publik Sebagian</option>
-            <option value="private">Privat</option>
+            <option value="full_public">All Public</option>
+            <option value="partial_public">Partial Public</option>
+            <option value="private">All Private</option>
           </select>
-        </div>
-
-        {/* Idea Details */}
-        <div className="mb-3">
-          <label className="block mb-1 text-sm font-medium">Detail Ide</label>
-          <textarea
-            value={ideaDetails}
-            onChange={(e) => setIdeaDetails(e.target.value)}
-            rows={2}
-            placeholder="Jelaskan ide secara pribadi"
-            className="w-full p-3 rounded-md border dark:border-gray-600 bg-gray-50 dark:bg-gray-800 dark:text-white"
-          />
-        </div>
-
-        {/* Internal Notes */}
-        <div className="mb-4">
-          <label className="block mb-1 text-sm font-medium">Catatan Internal</label>
-          <textarea
-            value={internalNotes}
-            onChange={(e) => setInternalNotes(e.target.value)}
-            rows={2}
-            placeholder="Hanya bisa dibaca oleh kamu"
-            className="w-full p-3 rounded-md border dark:border-gray-600 bg-gray-50 dark:bg-gray-800 dark:text-white"
-          />
         </div>
 
         {/* Submit */}
@@ -214,10 +187,10 @@ export default function FormCreatePostCategory({ redirectTo }: Props) {
           <button
             type="submit"
             disabled={loading}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-md flex items-center gap-2 disabled:opacity-60"
+            className="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-5 py-2 rounded-md flex items-center gap-2 disabled:opacity-60"
           >
             {loading && <Loader2 className="animate-spin h-4 w-4" />}
-            Buat Kategori
+            Create Categorize
           </button>
         </div>
       </form>

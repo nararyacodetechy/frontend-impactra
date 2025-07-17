@@ -9,7 +9,7 @@ import { OverlayLoadingModal } from '@/components/generals/OverlayLoadingModal';
 export default function FeedPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('Semua');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
